@@ -15,6 +15,7 @@ outputfile.write("Datalogger Output")
 #outputfile.write(date.today())
 outputfile.write(now.strftime("%d/%m/%Y %H:%M:%S"))
 
+int_start_cap = 0
 
 serialport.open()
 
@@ -36,6 +37,10 @@ try:
 		rcv = serialport.read(size=100)
 		serialport.flush()
 		print rcv
+		print("--")
+		if(rcv[1]=='C' and rcv[2]=='H'):
+			outputfile.write("@" + rcv[4] + ":" + rcv[6] + rcv[7] + rcv[8] + rcv[9] + rcv[10])
+
 except KeyboardInterrupt:
 	serialport.close()
 	outputfile.close()
